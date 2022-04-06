@@ -32,7 +32,7 @@
 <body>
 
     @include('frontend.layouts.partials.topbar')
-    @include('frontend.layouts.partials.nav')
+    @yield('nav')
     
     @yield('content')
     @include('frontend.layouts.partials.footer')

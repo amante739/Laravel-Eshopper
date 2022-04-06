@@ -17,6 +17,7 @@ class ShopController extends Controller
      */
     public function index(Request $request)
     {
+        $categories = Category::with('subcategories')->where('cat_status', 1)->get();
         $category_id = [];
         $brand_id = [];
         if($request->input('category_id'))
@@ -40,7 +41,7 @@ class ShopController extends Controller
             $products_query->orWhereIn('brand_id', $brand_id);
         }
         $all_products = $products_query->get();
-        return view('frontend.shop.index', compact(['all_products', 'all_categories', 'all_brands', 'category_id', 'brand_id']));
+        return view('frontend.shop.index', compact(['all_products', 'all_categories', 'all_brands', 'category_id', 'brand_id', 'categories']));
     }
 
     /**

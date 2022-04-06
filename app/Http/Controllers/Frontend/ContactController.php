@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Banner;
+use App\Models\Category;
 
 class ContactController extends Controller
 {
@@ -14,7 +16,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('frontend.contact.index');
+        $banners = Banner::where('banner_status', 1)->get();
+        $categories = Category::with('subcategories')->where('cat_status', 1)->get();
+        $featured_category = Category::where('cat_is_featured', 1)->get();
+        return view('frontend.contact.index', compact(['categories', 'featured_category', 'banners']));
     }
 
     /**

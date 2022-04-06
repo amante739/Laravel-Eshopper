@@ -1,5 +1,7 @@
 @extends('frontend.layouts.home_master')
-
+@section('nav')
+@include('frontend.layouts.partials.nav_home')
+@endsection
 @section('content')
 @if ($message = Session::get('error'))
 <div class="alert alert-danger text-center">
@@ -11,6 +13,7 @@
     <p><b>{{ $message }}</b></p>
 </div>
 @endif
+
 <!-- Featured Start -->
 <div class="container-fluid pt-5">
     <div class="row px-xl-5 pb-3">
