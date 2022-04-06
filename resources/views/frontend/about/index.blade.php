@@ -36,7 +36,7 @@
         </div>
         <div class="col-lg-5 mb-5">
             
-                <img class="img-full" src="{{ asset('front/images/product/large-size/13.jpg') }}" alt="About Us" />
+                <img class="img-full" src="{{ asset('front/img/product/large-size/13.jpg') }}" alt="About Us" />
             
         </div>
     </div>
