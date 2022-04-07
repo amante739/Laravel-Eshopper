@@ -1,212 +1,293 @@
 @extends('frontend.layouts.home_master')
-
+@section('nav')
+@include('frontend.layouts.partials.nav')
+@endsection
 @section('content')
 
-    <!-- Begin Li's Breadcrumb Area -->
-    <div class="breadcrumb-area">
-        <div class="container">
-            <div class="breadcrumb-content">
-                <ul>
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                    <li class="active">Product Details</li>
-                </ul>
-            </div>
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Product - Detail</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="{{ url('/') }}">Home</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0"><a href="{{ url('/shop') }}">Shop</a></p>
         </div>
     </div>
-    <!-- Li's Breadcrumb Area End Here -->
-    <!-- content-wraper start -->
-    <div class="content-wraper pb-50">
-        <div class="container">
-            @if ($message = Session::get('success'))
-            <div class="alert alert-success text-center">
-                <p><b>{{ $message }}</b></p>
+</div>
+<!-- Page Header End -->
+<!-- content-wraper start -->
+<div class="content-wraper pb-50">
+    <div class="container">
+        @if ($message = Session::get('success'))
+        <div class="alert alert-success text-center">
+            <p><b>{{ $message }}</b></p>
+        </div>
+        @endif
+        @if ($message = Session::get('quantity_error'))
+        <div class="alert alert-danger text-center">
+            <p><b>{{ $message }}</b></p>
+        </div>
+        @endif
+        
+    </div>
+</div>
+<!-- content-wraper end -->
+<!-- Begin Product Area -->
+<!-- Shop Detail Start -->
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    <div class="carousel-item active">
+                        <img class="w-100 h-100" src="{{asset('front/img/product-1.jpg')}}" alt="Image">
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <img class="w-100 h-100" src="{{asset('front/img/product-2.jpg')}}" alt="Image">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="w-100 h-100" src="{{asset('front/img/product-3.jpg')}}" alt="Image">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="w-100 h-100" src="{{asset('front/img/product-4.jpg')}}" alt="Image">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                </a>
+                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                </a>
             </div>
-            @endif
-            @if ($message = Session::get('quantity_error'))
-            <div class="alert alert-danger text-center">
-                <p><b>{{ $message }}</b></p>
+        </div>
+        <div class="col-lg-7 pb-5">
+            <h3 class="font-weight-semi-bold">{{ $product['pro_name'] }}</h3>
+            <div class="d-flex mb-3">
+                <div class="text-primary mr-2">
+                    <small class="fas fa-star"></small>
+                    <small class="fas fa-star"></small>
+                    <small class="fas fa-star"></small>
+                    <small class="fas fa-star-half-alt"></small>
+                    <small class="far fa-star"></small>
+                </div>
+                <small class="pt-1">(50 Reviews)</small>
             </div>
-            @endif
-            <div class="row single-product-area">
-                <div class="col-lg-5 col-md-6">
-                    <!-- Product Details Left -->
-                    <div class="product-details-left">
-                        <div class="product-details-images slider-navigation-1">
-                            @foreach ($images as $pro_image)
-                            <div class="lg-image">
-                                <a class="popup-img venobox vbox-item" href="{{ asset('storage/'.$pro_image) }}" data-gall="myGallery">
-                                    <img style="margin-bottom: 20px;object-fit: cover;height: 415px;" src="{{ asset('storage/'.$pro_image) }}" alt="product image">
-                                </a>
+            <h3 class="font-weight-semi-bold mb-4">৳{{ $product['pro_sale_price'] }}</h3>
+            <p class="mb-4">{{ $product['pro_content'] }}</p>
+            <!--
+            <div class="d-flex mb-3">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+                <form>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="size-1" name="size">
+                        <label class="custom-control-label" for="size-1">XS</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="size-2" name="size">
+                        <label class="custom-control-label" for="size-2">S</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="size-3" name="size">
+                        <label class="custom-control-label" for="size-3">M</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="size-4" name="size">
+                        <label class="custom-control-label" for="size-4">L</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="size-5" name="size">
+                        <label class="custom-control-label" for="size-5">XL</label>
+                    </div>
+                </form>
+            </div>
+            <div class="d-flex mb-4">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+                <form>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="color-1" name="color">
+                        <label class="custom-control-label" for="color-1">Black</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="color-2" name="color">
+                        <label class="custom-control-label" for="color-2">White</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="color-3" name="color">
+                        <label class="custom-control-label" for="color-3">Red</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="color-4" name="color">
+                        <label class="custom-control-label" for="color-4">Blue</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="color-5" name="color">
+                        <label class="custom-control-label" for="color-5">Green</label>
+                    </div>
+                </form>
+            </div>-->
+            <div class="d-flex align-items-center mb-4 pt-2">
+                <div class="input-group quantity mr-3" style="width: 130px;">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary btn-minus">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control bg-secondary text-center" value="1">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary btn-plus">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+            </div>
+            <div class="d-flex pt-2">
+                <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+                <div class="d-inline-flex">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row px-xl-5">
+            <div class="col">
+                <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                    <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-pane-1">
+                        <h4 class="mb-3">Product Description</h4>
+                        <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo
+                            dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed
+                            sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor
+                            kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo
+                            est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur
+                            at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea
+                            invidunt.</p>
+                        <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor consetetur
+                            sed lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita clita diam clita. Sea
+                            amet et sed ipsum lorem elitr et, amet et labore voluptua sit rebum. Ea erat sed et diam takimata
+                            sed justo. Magna takimata justo et amet magna et.</p>
+                    </div>
+                    <div class="tab-pane fade" id="tab-pane-2">
+                        <h4 class="mb-3">Additional Information</h4>
+                        <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo
+                            dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed
+                            sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor
+                            kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo
+                            est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur
+                            at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea
+                            invidunt.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item px-0">
+                                        Sit erat duo lorem duo ea consetetur, et eirmod takimata.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Duo amet accusam eirmod nonumy stet et et stet eirmod.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
+                                    </li>
+                                </ul>
                             </div>
-                            @endforeach
-                        </div>
-                        <div class="product-details-thumbs slider-thumbs-1">
-                            @foreach ($images as $pro_image)
-                            <div class="sm-image"><img height="88px;object-fit:cover;" src="{{ asset('storage/'.$pro_image) }}" alt="product image thumb"></div>
-                            @endforeach
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item px-0">
+                                        Sit erat duo lorem duo ea consetetur, et eirmod takimata.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Duo amet accusam eirmod nonumy stet et et stet eirmod.
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <!--// Product Details Left -->
-                </div>
-
-                <div class="col-lg-7 col-md-6">
-                    <div class="product-details-view-content pt-60">
-                        <div class="product-info">
-                            <h2>{{ $product['pro_name'] }}</h2>
-                            <!-- <span class="product-details-ref">Reference: demo_15</span> -->
-                            <!-- <div class="rating-box pt-20">
-                                <ul class="rating rating-with-review-item">
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                    <li class="review-item"><a href="#">Read Review</a></li>
-                                    <li class="review-item"><a href="#" data-toggle="modal" data-target="#mymodal">Write Review</a></li>
-                                </ul>
-                            </div> -->
-                            <div class="price-box pt-20">
-                                <span class="new-price new-price-2">৳{{ $product['pro_sale_price'] }}</span>
-                            </div>
-                            <div class="product-desc">
-                                <p>
-                                    <span>{{ $product['pro_content'] }}</span>
-                                </p>
-                            </div>
-                            <!-- <div class="product-variants">
-                                <div class="produt-variants-size">
-                                    <label>Dimension</label>
-                                    <select class="nice-select">
-                                        <option value="1" title="S" selected="selected">40x60cm</option>
-                                        <option value="2" title="M">60x90cm</option>
-                                        <option value="3" title="L">80x120cm</option>
-                                    </select>
-                                </div>
-                            </div> -->
-                            <div class="single-add-to-cart">
-                                <form action="{{ url('product-details-add-to-cart') }}" method="post" class="cart-quantity">
-                                    @csrf
-                                    <div class="quantity">
-                                        <label>Quantity</label>
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" name="pro_quantity" value="1" type="text">
-                                            <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                            <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                    <div class="tab-pane fade" id="tab-pane-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
+                                <div class="media mb-4">
+                                    <img src="{{asset('front/img/user.jpg')}}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                    <div class="media-body">
+                                        <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
+                                        <div class="text-primary mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <i class="far fa-star"></i>
                                         </div>
+                                        <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at.
+                                            Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
                                     </div>
-                                    <button class="add-to-cart" type="submit">Add to cart</button>
-                                    <input name="id" value="{{ $product['id'] }}" type="hidden">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="mb-4">Leave a review</h4>
+                                <small>Your email address will not be published. Required fields are marked *</small>
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2">Your Rating * :</p>
+                                    <div class="text-primary">
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="message">Your Review *</label>
+                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Your Name *</label>
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Your Email *</label>
+                                        <input type="email" class="form-control" id="email">
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                                    </div>
                                 </form>
                             </div>
-                            <!-- <div class="product-additional-info pt-25">
-                                <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
-                                <div class="product-social-sharing pt-25">
-                                    <ul>
-                                        <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
-                                        <li class="twitter"><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
-                                        <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google +</a></li>
-                                        <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
-                                    </ul>
-                                </div>
-                            </div> -->
-                            <div class="block-reassurance">
-                                <ul>
-                                    <li>
-                                        <div class="reassurance-item">
-                                            <div class="reassurance-icon">
-                                                <i class="fa fa-check-square-o"></i>
-                                            </div>
-                                            <p>Security policy (edit with Customer reassurance module)</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="reassurance-item">
-                                            <div class="reassurance-icon">
-                                                <i class="fa fa-truck"></i>
-                                            </div>
-                                            <p>Delivery policy (edit with Customer reassurance module)</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="reassurance-item">
-                                            <div class="reassurance-icon">
-                                                <i class="fa fa-exchange"></i>
-                                            </div>
-                                            <p> Return policy (edit with Customer reassurance module)</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
-    <!-- content-wraper end -->
-    <!-- Begin Product Area -->
-    <div class="product-area pt-35">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="li-product-tab">
-                        <ul class="nav li-product-menu">
-                            <li><a class="active" data-toggle="tab" href="#description"><span>Description</span></a></li>
-                            <!-- <li><a data-toggle="tab" href="#product-details"><span>Product Details</span></a></li> -->
-                            <!-- <li><a data-toggle="tab" href="#reviews"><span>Reviews</span></a></li> -->
-                        </ul>               
-                    </div>
-                    <!-- Begin Li's Tab Menu Content Area -->
-                </div>
-            </div>
-            <div class="tab-content">
-                <div id="description" class="tab-pane active show" role="tabpanel">
-                    <div class="product-description">
-                        <span>{{ $product['pro_description'] }}</span>
-                    </div>
-                </div>
-                <!-- <div id="product-details" class="tab-pane" role="tabpanel">
-                    <div class="product-details-manufacturer">
-                        <a href="#">
-                            <img src="{{ asset('front/images/product-details/1.jpg') }}" alt="Product Manufacturer Image">
-                        </a>
-                        <p><span>Reference</span> demo_7</p>
-                        <p><span>Reference</span> demo_7</p>
-                    </div>
-                </div>
-                <div id="reviews" class="tab-pane" role="tabpanel">
-                    <div class="product-reviews">
-                        <div class="product-details-comment-block">
-                            <div class="comment-review">
-                                <span>Grade</span>
-                                <ul class="rating">
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                </ul>
-                            </div>
-                            <div class="comment-author-infos pt-25">
-                                <span>HTML 5</span>
-                                <em>01-12-18</em>
-                            </div>
-                            <div class="comment-details">
-                                <h4 class="title-block">Demo</h4>
-                                <p>Plaza</p>
-                            </div>
-                            <div class="review-btn">
-                                <a class="review-links" href="#" data-toggle="modal" data-target="#mymodal">Write Your Review!</a>
-                            </div>
+</div>
 
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-    </div>
-    <!-- Product Area End Here -->
-    
-    
-    
+<!-- Product Area End Here -->
+
+
+
 @endsection

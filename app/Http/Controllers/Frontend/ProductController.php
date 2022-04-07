@@ -65,6 +65,8 @@ class ProductController extends Controller
     public function show($pro_slug)
     {
         $product = Product::where('pro_slug', $pro_slug)->first();
+        $categories = Category::with('subcategories')->where('cat_status', 1)->get();
+        $featured_category = Category::where('cat_is_featured', 1)->get();
         $product->pro_images = json_decode($product->pro_images, true);
         if(is_array($product->pro_images))
         {
@@ -74,7 +76,7 @@ class ProductController extends Controller
         {
             $images[] = $product->pro_images;
         }
-        return view('frontend.product.index', compact(['product', 'images']));
+        return view('frontend.product.index', compact(['product', 'images','categories','featured_category']));
     }
 
     /**

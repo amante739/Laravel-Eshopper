@@ -41,6 +41,7 @@ class ShopController extends Controller
             $products_query->orWhereIn('brand_id', $brand_id);
         }
         $all_products = $products_query->get();
+        
         return view('frontend.shop.index', compact(['all_products', 'all_categories', 'all_brands', 'category_id', 'brand_id', 'categories']));
     }
 
