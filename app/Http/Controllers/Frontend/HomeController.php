@@ -17,7 +17,8 @@ class HomeController extends Controller
     public function index()
     {
         $banners = Banner::where('banner_status', 1)->get();
-        $categories = Category::with('subcategories')->where('cat_status', 1)->get();
+        $categories = Category::where('cat_status', 1)->get();
+       // dd($categories);
         $featured_category = Category::where('cat_is_featured', 1)->get();
         return view('frontend.home.index', compact(['categories', 'featured_category', 'banners']));
     }
