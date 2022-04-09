@@ -59,10 +59,73 @@
                 <i class="fas fa-heart text-primary"></i>
                 <span class="badge">0</span>
             </a>
-            <a href="" class="btn border">
-                <span class="badge"><i class="fas fa-shopping-cart text-primary">{{ count((array) session('cart')) }}</i></span>
-                <span class="badge">{{ $total }}</span>
-            </a>
+
+            <span class="nav-item dropdown" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <a href="" class="btn border">
+                    <span class="cart-item-count">{{ count((array)
+                        session('cart')) }} <i class="fas fa-shopping-cart text-primary"></i></span>
+                    <span class="badge">{{ $total }}</span><i class="fa fa-angle-down float-right mt-1"></i>
+                </a>
+
+            </span>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
+                @if(session('cart'))
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                    </div>
+                    <div class="card-body">
+                        @foreach(session('cart') as $id => $details)
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <!--<a href="{{ url($details['pro_url']) }}" class="minicart-product-image">
+                            <img src="{{ asset('storage/'.$details['pro_main_image']) }}" alt="cart products">
+                        </a>-->
+
+                            <h6><a href="{{ url($details['pro_url']) }}">{{ $details['pro_name'] }}</a></h6>
+                            <span>৳{{ $details['pro_sale_price'] }} x {{ $details['pro_quantity'] }}</span>
+
+                            <button class="btn btn-sm btn-primary btn-minus">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Subtotal</h6>
+                            <h6 class="font-weight-medium">{{ $total }}</h6>
+                        </div>
+                        <!--<div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Shipping</h6>
+                            <h6 class="font-weight-medium">$10</h6>
+                        </div>-->
+                        @endforeach
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 class="font-weight-bold">{{ $total }}</h5>
+                        </div>
+                        <button class="btn btn-block btn-dark "><a href="{{ route('cart') }}" class="text-primary">
+                            View Full Cart
+                        </a></button>
+                        <button class="btn btn-block btn-dark  "><a href="{{ route('checkout.index') }}" class="text-primary">
+                            Checkout
+                        </a></button>
+                        
+                           
+                       
+                    </div>
+                </div>
+                @else
+                <div class="nav-item">
+                    <a class="btn" style="background-color: #212529 !important;">
+                        <span style="color: #ffff;background-color: #212529;">Your Cart is empty</span>
+                    </a>
+                </div>
+                @endif
+            </div>
+
+
         </div>
     </div>
 </div>
