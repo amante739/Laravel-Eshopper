@@ -24,7 +24,7 @@
 
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <button class="btn btn-default">Login</button>
+                    <button class="btn btn-primary">Login</button>
                 </div>
             </form>
         </div>

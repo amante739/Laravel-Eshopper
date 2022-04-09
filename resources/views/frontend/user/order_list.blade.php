@@ -1,19 +1,22 @@
 @extends('frontend.layouts.home_master')
+@section('nav')
 
+@include('frontend.layouts.partials.nav')
+@endsection
 @section('content')
 
-<!-- Begin Li's Breadcrumb Area -->
-<div class="breadcrumb-area">
-    <div class="container">
-        <div class="breadcrumb-content">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="active">Blog Details Left Sidebar</li>
-            </ul>
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Account</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="{{ url('/') }}">Home</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">My Order List</p>
         </div>
     </div>
 </div>
-<!-- Li's Breadcrumb Area End Here -->
+<!-- Page Header End -->
 
 
 @if ($message = Session::get('error'))
