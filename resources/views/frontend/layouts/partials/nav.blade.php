@@ -1,3 +1,13 @@
+@if ($message = Session::get('error'))
+<div class="alert alert-danger text-center">
+    <p><b>{{ $message }}</b></p>
+</div>
+@endif
+@if ($message = Session::get('success'))
+<div class="alert alert-success text-center">
+    <p><b>{{ $message }}</b></p>
+</div>
+@endif
 <!-- Navbar Start -->
 <div class="container-fluid">
     <div class="row border-top px-xl-5">
@@ -66,7 +76,8 @@
                         <a href="{{ route('contact.index') }}" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="" class="nav-item nav-link">Login</a>
+                       
+                        <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#modalLoginForm">Sign In</a>
                         <a href="" class="nav-item nav-link">Register</a>
                     </div>
                 </div>

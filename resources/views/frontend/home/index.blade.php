@@ -1,18 +1,10 @@
 @extends('frontend.layouts.home_master')
 @section('nav')
+
 @include('frontend.layouts.partials.nav_home')
 @endsection
 @section('content')
-@if ($message = Session::get('error'))
-<div class="alert alert-danger text-center">
-    <p><b>{{ $message }}</b></p>
-</div>
-@endif
-@if ($message = Session::get('success'))
-<div class="alert alert-success text-center">
-    <p><b>{{ $message }}</b></p>
-</div>
-@endif
+
 
 <!-- Featured Start -->
 <div class="container-fluid pt-5">

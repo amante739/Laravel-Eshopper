@@ -36,6 +36,7 @@
     
     @yield('content')
     @include('frontend.layouts.partials.footer')
+    @include('frontend.layouts.partials.user_login_modal')
 
     <!-- Body Wrapper End Here -->
     <!-- Back to Top -->
