@@ -78,20 +78,20 @@
                         <a href="{{ route('contact.index') }}" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
-@if(Auth::user())
-                        <button class="btn  dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
+                        @if(Auth::user())
+                        <button class="btn  dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             <span>{{ Auth::user()->first_name.' '.Auth::user()->last_name }}</span>
                         </button>
                         @else
-                        <button class="btn  dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
+                        <button class="btn  dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             <span>Account</span>
                         </button>
                         @endif
-                        
+
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                        
+
                             @if(Auth::user())
                             <a href="{{ route('account.index') }}" class="dropdown-item">My Account</a>
                             @endif
@@ -99,7 +99,8 @@
                             <a href="{{ route('checkout.index') }}" class="dropdown-item">Checkout</a>
                             @endif
                             @if(Auth::user())
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                 class="dropdown-item">logout</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
@@ -107,7 +108,7 @@
                             @else
                             <a class="dropdown-item" href="#" data-target="#modalLoginForm" data-toggle="modal">Sign</a>
                             @endif
-                        
+
                         </div>
                     </div>
 
