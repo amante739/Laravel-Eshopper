@@ -82,18 +82,19 @@
                         <ul>
                         @foreach(session('cart') as $id => $details)
                         <li data-id="{{ $id }}" class="no-bullets">
-                            <div class="d-flex justify-content-between mb-3 pt-1">
+                            
                                 <!--<a href="{{ url($details['pro_url']) }}" class="minicart-product-image">
                                 <img src="{{ asset('storage/'.$details['pro_main_image']) }}" alt="cart products">
                             </a>-->
                             
-                                <h6><a href="{{ url($details['pro_url']) }}">{{ $details['pro_name'] }}</a></h6>
+                                <span><h6><a href="{{ url($details['pro_url']) }}">{{ $details['pro_name'] }}</a></h6></span>
                                 <span>৳{{ $details['pro_sale_price'] }} x {{ $details['pro_quantity'] }}</span>
-
+                                <span>
                                 <button class="btn btn-sm  close btn-minus remove-from-cart">
                                     <i class="fa fa-minus "></i>
                                 </button>
-                            </div>
+                                </span>
+                            
                         </li>
                         @endforeach
                         </ul>
