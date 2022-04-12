@@ -70,11 +70,11 @@
 
             </span>
 
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
+            <div class="dropdown-menu dropdown-menu-right " aria-labelledby="triggerId">
                 
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
-                        <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                        <h5 class="font-weight-semi-bold m-0">Cart Summary</h5>
                     </div>
                     @if(session('cart'))
                     <div class="card-body">
@@ -123,14 +123,18 @@
                            
                        
                     </div>
-                </div>
                     @else
                     <div class="nav-item">
-                        <a class="btn" style="background-color: #212529 !important;">
-                            <span style="color: #ffff;background-color: #212529;">Your Cart is empty</span>
-                        </a>
+                        <!-- <a class="btn" style="background-color: #212529 !important;">
+                                                <span style="color: #ffff;background-color: #212529;">Your Cart is empty</span>
+                                            </a>-->
+                        <button class="btn btn-block btn-dark ">
+                            Your Cart is empty
+                        </button>
                     </div>
                     @endif
+                </div>
+                    
             </div>
 
 
