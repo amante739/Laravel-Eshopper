@@ -71,57 +71,61 @@
             </span>
 
             <div class="dropdown-menu dropdown-menu-right " aria-labelledby="triggerId">
-                
+
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
                         <h5 class="font-weight-semi-bold m-0">Cart Summary</h5>
                     </div>
                     @if(session('cart'))
                     <div class="card-body">
-                       
+
                         <ul>
-                        @foreach(session('cart') as $id => $details)
-                        <li data-id="{{ $id }}">
-                            <div class="d-flex justify-content-between mb-3 pt-1" data-id="{{ $id }}">
+                            @foreach(session('cart') as $id => $details)
+                            <li data-id="{{ $id }}" class="no-bullets">
+
                                 <!--<a href="{{ url($details['pro_url']) }}" class="minicart-product-image">
                                 <img src="{{ asset('storage/'.$details['pro_main_image']) }}" alt="cart products">
                             </a>-->
 
-                                <h6><a href="{{ url($details['pro_url']) }}">{{ $details['pro_name'] }}</a></h6>
+                                <span>
+                                    <h6><a href="{{ url($details['pro_url']) }}">{{ $details['pro_name'] }}</a></h6>
+                                </span>
                                 <span>৳{{ $details['pro_sale_price'] }} x {{ $details['pro_quantity'] }}</span>
+                                <span>
+                                    <button class="btn btn-sm  close btn-minus remove-from-cart">
+                                        <i class="fa fa-minus "></i>
+                                    </button>
+                                </span>
 
-                                <button class="btn btn-sm btn-primary btn-minus remove-from-cart">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                        </li>
-                        @endforeach
+                            </li>
+                            @endforeach
                         </ul>
-                       
-                        <div class="d-flex justify-content-between mb-3 pt-1">
+
+                        <!-- <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Subtotal</h6>
                             <h6 class="font-weight-medium">{{ $total }}</h6>
-                        </div>
+                        </div>--->
                         <!--<div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
                             <h6 class="font-weight-medium">$10</h6>
                         </div>-->
-                       
+
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
-                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 class="font-weight-bold">Sub Total</h5>
                             <h5 class="font-weight-bold">{{ $total }}</h5>
                         </div>
                         <button class="btn btn-block btn-dark "><a href="{{ route('cart') }}" class="text-primary">
-                            View Full Cart
-                        </a></button>
-                        <button class="btn btn-block btn-dark  "><a href="{{ route('checkout.index') }}" class="text-primary">
-                            Checkout
-                        </a></button>
-                        
-                           
-                       
+                                View Full Cart
+                            </a></button>
+                        <button class="btn btn-block btn-dark  "><a href="{{ route('checkout.index') }}"
+                                class="text-primary">
+                                Checkout
+                            </a></button>
+
+
+
                     </div>
                     @else
                     <div class="nav-item">
@@ -134,7 +138,7 @@
                     </div>
                     @endif
                 </div>
-                    
+
             </div>
 
 
