@@ -20,9 +20,76 @@
 
 <!-- Checkout Start -->
 <div class="container-fluid pt-5">
+    <div class="row px-xl-5 pb-3">
+        <div class="col-12">
+            <div class="coupon-accordion">
+                <!--Accordion Start-->
+                @if(!Auth::user())
+                <h3>Returning customer? <span id="showlogin">Click here to login</span></h3>
+                <div id="checkout-login" class="coupon-content">
+                    <div class="coupon-info">
+                        <!-- <p class="coupon-text">Quisque gravida turpis sit amet nulla posuere lacinia. Cras sed est sit amet ipsum luctus.</p> -->
+                        <form action="{{ url('user/login/') }}" method="post">
+                            @csrf
+
+                            <div class="col-md-6 form-group">
+                                <label>Username or email <span class="required">*</span></label>
+                                <input class="form-control" type="text" name="email">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Password <span class="required">*</span></label>
+                                <input class="form-control" type="text" name="password">
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label>
+                                    <input value="Login" class="btn btn-primary" type="submit">
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="remember">
+                                    Remember me
+                                </label>
+                                
+                                
+                                <label>
+                                    <a href="#">Lost your password?</a></label>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                @endif
+                <!--Accordion End-->
+                <!--Accordion Start-->
+                <!-- <h3>Have a coupon? <span id="showcoupon">Click here to enter your code</span></h3>
+                            <div id="checkout_coupon" class="coupon-checkout-content">
+                                <div class="coupon-info">
+                                    <form action="#">
+                                        <p class="checkout-coupon">
+                                            <input placeholder="Coupon code" type="text">
+                                            <input value="Apply Coupon" type="submit">
+                                        </p>
+                                    </form>
+                                </div>
+                            </div> -->
+                <!--Accordion End-->
+            </div>
+        </div>
+    </div>
+    @if ($message = Session::get('error'))
+    <div class="alert alert-danger text-center">
+        <p><b>{{ $message }}</b></p>
+    </div>
+    @endif
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success text-center">
+        <p><b>{{ $message }}</b></p>
+    </div>
+    @endif
     <div class="row px-xl-5">
         <div class="col-lg-8">
             <div class="mb-4">
+
                 <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
                 <div class="row">
                     <div class="col-md-6 form-group">
@@ -204,5 +271,34 @@
     </div>
 </div>
 <!-- Checkout End -->
+@endsection
+@section('extrajs')
+<script>
+    /*----------------------------------------*/
+    /* 14. Toggle Function Active
+    /*----------------------------------------*/
+    // showlogin toggle
+    $(document).ready(function () { 
+       
+        $('#showlogin').on('click', function() {
+        $('#checkout-login').slideToggle(900);
+        });
+        // showlogin toggle
+        $('#showcoupon').on('click', function() {
+        $('#checkout_coupon').slideToggle(900);
+        });
+        // showlogin toggle
+        $('#cbox').on('click', function() {
+        $('#cbox-info').slideToggle(900);
+        });
+        
+        // showlogin toggle
+        $('#ship-box').on('click', function() {
+        $('#ship-box-info').slideToggle(1000);
+        });
+    });
 
+
+
+</script>
 @endsection
