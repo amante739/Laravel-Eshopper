@@ -197,14 +197,14 @@ class ProductController extends Controller
         {
             $images[] = $product->pro_images;
         }
-        $product->pro_variations = json_decode($product->pro_variations);
-        
+        $product_variations = json_decode($product->pro_variations, true);
+        // dd($product_variations);
         $all_brand = Brand::all();
         $all_category = Category::all();
         $all_subcategory = SubCategory::where('cat_id', $product->category_id)->get();
         $all_attribute = Attribute::with('attributesets')->get();
         
-        return view('admin.product.edit', compact(['product', 'all_category', 'all_subcategory', 'all_brand', 'all_attribute', 'images']));
+        return view('admin.product.edit', compact(['product', 'all_category', 'all_subcategory', 'all_brand', 'all_attribute', 'images', 'product_variations']));
     }
 
     /**

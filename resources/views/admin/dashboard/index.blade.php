@@ -28,14 +28,16 @@
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-users"></i></span>
+                    <a href="">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-users"></i></span>
 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Total Registered User's</span>
-                            <span class="info-box-number">{{ $total_user }}</span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Registered User's</span>
+                                <span class="info-box-number">{{ $total_user }}</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-3">
                     <a href="">

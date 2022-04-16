@@ -24,7 +24,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $all_brand = Brand::all();
+        $all_brand = Brand::paginate(15);
         return view('admin.brand.index', compact('all_brand'));
     }
 
@@ -63,7 +63,9 @@ class BrandController extends Controller
             $brand_img_name = 'brand_name_'.time().'.'.pathinfo($_FILES['brand_logo']['name'], PATHINFO_EXTENSION);
             $brandImage = Storage::disk('public')->putFileAs('brand', $request->file('brand_logo'), $brand_img_name);
         }else{
-            $brandImage = '';
+            $get_img = Storage::disk('public')->path('demo.jpg');
+            $brand_img_name = 'brand_name_'.time().'.'.pathinfo($get_img, PATHINFO_EXTENSION);
+            $brandImage = Storage::disk('public')->putFileAs('brand', $get_img, $brand_img_name);
         }
 
         Brand::create([
@@ -76,7 +78,7 @@ class BrandController extends Controller
             'brand_logo' => $brandImage
         ]);
 
-        return redirect()->route('brand.index')->with('success', 'Updated successfully');
+        return redirect()->route('brand.index')->with('success', 'Created successfully');
     }
 
     /**
@@ -124,17 +126,25 @@ class BrandController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $catInfo = Brand::find($id);
+        $brandInfo = Brand::find($id);
 
         if ($request->file('brand_logo')) {
             $brand_img_name = 'brand_name_'.time().'.'.pathinfo($_FILES['brand_logo']['name'], PATHINFO_EXTENSION);
-            Storage::disk('public')->delete($catInfo->brand_logo);
+            Storage::disk('public')->delete($brandInfo->brand_logo);
             $brandImage = Storage::disk('public')->putFileAs('brand', $request->file('brand_logo'), $brand_img_name);
         }else{
-            $brandImage = $catInfo->brand_logo;
+            if(empty($brandInfo->brand_logo))
+            {
+                $get_img = Storage::disk('public')->path('demo.jpg');
+                $brand_img_name = 'brand_name_'.time().'.'.pathinfo($get_img, PATHINFO_EXTENSION);
+                $brandImage = Storage::disk('public')->putFileAs('brand', $get_img, $brand_img_name);
+            }
+            else{
+                $brandImage = $brandInfo->brand_logo;
+            }
         }
         
-        $catInfo->update([
+        $brandInfo->update([
             'brand_name' => $request->input('brand_name'),
             'brand_description' => $request->input('brand_description'),
             'brand_website' => $request->input('brand_website'),

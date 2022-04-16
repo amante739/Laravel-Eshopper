@@ -25,7 +25,7 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        $all_sub_category = SubCategory::with('category')->get();
+        $all_sub_category = SubCategory::with('category')->paginate(15);
         return view('admin.subcategory.index', compact('all_sub_category'));
     }
 
@@ -65,7 +65,9 @@ class SubCategoryController extends Controller
             $subcat_img_name = 'subcat_name_'.time().'.'.pathinfo($_FILES['subcat_image']['name'], PATHINFO_EXTENSION);
             $subCatImage = Storage::disk('public')->putFileAs('subcategory', $request->file('subcat_image'), $subcat_img_name);
         }else{
-            $subCatImage = '';
+            $get_img = Storage::disk('public')->path('demo.jpg');
+            $subcat_img_name = 'subcat_name_'.time().'.'.pathinfo($get_img, PATHINFO_EXTENSION);
+            $subCatImage = Storage::disk('public')->putFileAs('subcategory', $get_img, $subcat_img_name);
         }
         
         $custom_subcat_slug = preg_replace('/\s+/', '-', $request->input('subcat_name'));
@@ -80,7 +82,7 @@ class SubCategoryController extends Controller
             'subcat_image' => $subCatImage
         ]);
 
-        return redirect()->route('subcategory.index')->with('success', 'Updated successfully');
+        return redirect()->route('subcategory.index')->with('success', 'Created successfully');
     }
 
     /**
@@ -136,7 +138,15 @@ class SubCategoryController extends Controller
             Storage::disk('public')->delete($subCatInfo->subcat_image);
             $subCatImage = Storage::disk('public')->putFileAs('subcategory', $request->file('subcat_image'), $subcat_img_name);
         }else{
-            $subCatImage = $subCatInfo->subcat_image;
+            if(empty($subCatInfo->subcat_image))
+            {
+                $get_img = Storage::disk('public')->path('demo.jpg');
+                $subcat_img_name = 'subcat_name_'.time().'.'.pathinfo($get_img, PATHINFO_EXTENSION);
+                $subCatImage = Storage::disk('public')->putFileAs('subcategory', $get_img, $subcat_img_name);
+            }
+            else{
+                $subCatImage = $subCatInfo->subcat_image;
+            }
         }
         
         $custom_subcat_slug = preg_replace('/\s+/', '-', $request->input('subcat_name'));

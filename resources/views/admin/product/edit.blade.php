@@ -90,7 +90,7 @@
                                     <div class="preview-image preview-show-{{$key}}">
                                         <div class="image-cancel" data-no="{{$key}}">x</div>
                                         <div class="image-zone">
-                                            <img id="pro-img-{{$key}}" src="{{ asset('storage/'.$image) }}">
+                                            <img id="pro-img-{{$key}}" src="{{ asset('storage/app/public/'.$image) }}">
                                             <input type="fiie" style="display: none;" name="pro_old_images[]" value="{{$image}}">
                                         </div>
                                     </div>
@@ -112,23 +112,35 @@
 
                                 @foreach ($all_attribute as $key => $attribute)
                                 <div class="col-md-12 mb-4">
-
+                                    @php $count = 0 @endphp
+                                    @foreach ($product_variations as $var_key => $var)
+                                        @if($var['key'] == $attribute->id)
+                                            @php $count = 1 @endphp
+                                        @endif
+                                    @endforeach
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" @if (isset($product->pro_variations[$key]['value']) && in_array($attribute->id, $product->pro_variations[$key])) checked @endif value="{{ $attribute->id }}" name="attribute{{ $key }}" type="checkbox" id="attr{{ $key }}">
+                                        <input class="custom-control-input" @if($count == 1) checked @endif value="{{ $attribute->id }}" name="attribute{{ $key }}" type="checkbox" id="attr{{ $key }}">
                                         <label for="attr{{$key}}" class="custom-control-label">{{ $attribute->attribute_name }}</label>
                                     </div>
+                                    
                                     <div class="row mt-2">
-
                                         @foreach($attribute->attributesets as $newkey => $subattr)
+                                        
+                                        @php $data = 0 @endphp
+                                        @foreach ($product_variations as $var_key => $var)
+                                            @if($var['key'] == $attribute->id && in_array($subattr->id, $var['value']))
+                                                @php $data = 1 @endphp
+                                            @endif
+                                        @endforeach
+
                                         <div class="col-md-3 mb-2">
                                             <div class="form-check-inline">
                                                 <label class="form-check-label">
-                                                    <input type="checkbox" name="subattribute{{ $key }}[]" class="form-check-input checky" value="{{ $subattr->id }}" @if (isset($product->pro_variations[$key]['value']) && in_array($subattr->id, $product->pro_variations[$key]['value'])) checked @endif>{{ $subattr->attribute_set_name }}
+                                                    <input type="checkbox" name="subattribute{{ $key }}[]" class="form-check-input checky" value="{{ $subattr->id }}" @if($data == 1) checked @endif>{{ $subattr->attribute_set_name }}
                                                 </label>
                                             </div>
                                         </div>
                                         @endforeach
-                                        
                                     </div>
 
                                 </div>

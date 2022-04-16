@@ -109,6 +109,27 @@
             </li>
         </ul>
     </li>
+    
+
+    <li class="nav-item has-treeview">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fa fa-tags"></i>
+            <p>
+                Tags
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="{{ route('tag.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                        All Tag
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </li>
 
     <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
@@ -192,6 +213,42 @@
                     <i class="far fa-circle nav-icon"></i>
                     <p>
                         Banner
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="nav-item has-treeview">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fa fa-paperclip"></i>
+            <p>
+                Pages
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="{{ route('faq.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                        Faq
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('term.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                        Terms & Conditions
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('policy.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                        Privacy and Policy
                     </p>
                 </a>
             </li>

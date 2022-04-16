@@ -258,6 +258,94 @@ class PermissionSeeder extends Seeder
                 'type' => 'banner'
             ],
 
+            // Faq policy
+            [
+                'name' => 'faq-list',
+                'type' => 'faq'
+            ],
+            [
+                'name' => 'faq-create',
+                'type' => 'faq'
+            ],
+            [
+                'name' => 'faq-view',
+                'type' => 'faq'
+            ],
+            [
+                'name' => 'faq-edit',
+                'type' => 'faq'
+            ],
+            [
+                'name' => 'faq-delete',
+                'type' => 'faq'
+            ],
+
+            // Policy policy
+            [
+                'name' => 'policy-list',
+                'type' => 'policy'
+            ],
+            [
+                'name' => 'policy-create',
+                'type' => 'policy'
+            ],
+            [
+                'name' => 'policy-view',
+                'type' => 'policy'
+            ],
+            [
+                'name' => 'policy-edit',
+                'type' => 'policy'
+            ],
+            [
+                'name' => 'policy-delete',
+                'type' => 'policy'
+            ],
+
+            // Term policy
+            [
+                'name' => 'term-list',
+                'type' => 'term'
+            ],
+            [
+                'name' => 'term-create',
+                'type' => 'term'
+            ],
+            [
+                'name' => 'term-view',
+                'type' => 'term'
+            ],
+            [
+                'name' => 'term-edit',
+                'type' => 'term'
+            ],
+            [
+                'name' => 'term-delete',
+                'type' => 'term'
+            ],
+
+            // Tag policy
+            [
+                'name' => 'tag-list',
+                'type' => 'tag'
+            ],
+            [
+                'name' => 'tag-create',
+                'type' => 'tag'
+            ],
+            [
+                'name' => 'tag-view',
+                'type' => 'tag'
+            ],
+            [
+                'name' => 'tag-edit',
+                'type' => 'tag'
+            ],
+            [
+                'name' => 'tag-delete',
+                'type' => 'tag'
+            ],
+
         ];
 
         foreach ($permissions as $permission) {

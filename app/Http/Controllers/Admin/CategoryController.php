@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $all_category = Category::all();
+        $all_category = Category::paginate(15);
         return view('admin.category.index', compact('all_category'));
     }
 
@@ -62,7 +62,9 @@ class CategoryController extends Controller
             $cat_img_name = 'cat_name_'.time().'.'.pathinfo($_FILES['cat_image']['name'], PATHINFO_EXTENSION);
             $catImage = Storage::disk('public')->putFileAs('category', $request->file('cat_image'), $cat_img_name);
         }else{
-            $catImage = '';
+            $get_img = Storage::disk('public')->path('demo.jpg');
+            $cat_img_name = 'cat_name_'.time().'.'.pathinfo($get_img, PATHINFO_EXTENSION);
+            $catImage = Storage::disk('public')->putFileAs('category', $get_img, $cat_img_name);
         }
 
         $custom_cat_slug = preg_replace('/\s+/', '-', $request->input('cat_name'));
@@ -125,12 +127,20 @@ class CategoryController extends Controller
 
         $catInfo = Category::find($id);
 
-        if ($request->file('cat_image')) {
+        if ($request->file('cat_image')){
             $cat_img_name = 'cat_name_'.time().'.'.pathinfo($_FILES['cat_image']['name'], PATHINFO_EXTENSION);
             Storage::disk('public')->delete($catInfo->cat_image);
             $catImage = Storage::disk('public')->putFileAs('category', $request->file('cat_image'), $cat_img_name);
         }else{
-            $catImage = $catInfo->cat_image;
+            if(empty($catInfo->cat_image))
+            {
+                $get_img = Storage::disk('public')->path('demo.jpg');
+                $cat_img_name = 'cat_name_'.time().'.'.pathinfo($get_img, PATHINFO_EXTENSION);
+                $catImage = Storage::disk('public')->putFileAs('category', $get_img, $cat_img_name);
+            }
+            else{
+                $catImage = $catInfo->cat_image;
+            }
         }
         
         $custom_slug = preg_replace('/\s+/', '-', $request->input('cat_name'));

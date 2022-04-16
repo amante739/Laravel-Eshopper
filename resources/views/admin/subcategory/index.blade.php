@@ -107,6 +107,10 @@
                                 @endforeach
                             </tbody>
                         </table>
+
+                        <div class="d-flex justify-content-center mt-4">
+                            {!! $all_sub_category->links() !!}
+                        </div>
                         @endcan
 
                     </div>
