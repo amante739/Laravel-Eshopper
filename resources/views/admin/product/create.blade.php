@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        
+
         @can('product-create')
         <form role="form" action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -56,12 +56,14 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="pro_name">Product Name</label>
-                                <input type="text" name="pro_name" required class="form-control" value="{{ old('pro_name') }}" id="pro_name" placeholder="Enter Product Name">
+                                <input type="text" name="pro_name" required class="form-control"
+                                    value="{{ old('pro_name') }}" id="pro_name" placeholder="Enter Product Name">
                             </div>
 
                             <div class="form-group">
                                 <label for="pro_description">Product Description</label>
-                                <textarea class="summernote" name="pro_description">{{ old('pro_description') }}</textarea>
+                                <textarea class="summernote"
+                                    name="pro_description">{{ old('pro_description') }}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -80,8 +82,10 @@
                             <div class="form-group">
                                 <label for="pro_image">Product Image</label>
                                 <div>
-                                    <a class="btn btn-success mb-2" href="javascript:void(0)" onclick="$('#pro_image').click()">Add Multiple Images</a>
-                                    <input type="file" id="pro_image" name="pro_images[]" style="display: none;" class="form-control" multiple>
+                                    <a class="btn btn-success mb-2" href="javascript:void(0)"
+                                        onclick="$('#pro_image').click()">Add Multiple Images</a>
+                                    <input type="file" id="pro_image" name="pro_images[]" style="display: none;"
+                                        class="form-control" multiple>
                                 </div>
                                 <div class="preview-images-zone"></div>
                             </div>
@@ -100,8 +104,10 @@
                                 @foreach ($all_attribute as $key => $attribute)
                                 <div class="col-md-12 mb-4">
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" checked value="{{ $attribute->id }}" name="attribute{{ $key }}" type="checkbox" id="attr{{ $key }}">
-                                        <label for="attr{{$key}}" class="custom-control-label">{{ $attribute->attribute_name }}</label>
+                                        <input class="custom-control-input" checked value="{{ $attribute->id }}"
+                                            name="attribute{{ $key }}" type="checkbox" id="attr{{ $key }}">
+                                        <label for="attr{{$key}}" class="custom-control-label">{{
+                                            $attribute->attribute_name }}</label>
                                     </div>
                                     <div class="row mt-2">
 
@@ -109,19 +115,21 @@
                                         <div class="col-md-3 mb-2">
                                             <div class="form-check-inline">
                                                 <label class="form-check-label">
-                                                    <input type="checkbox" checked name="subattribute{{ $key }}[]" class="form-check-input checky" value="{{ $subattr->id }}">{{ $subattr->attribute_set_name }}
+                                                    <input type="checkbox" checked name="subattribute{{ $key }}[]"
+                                                        class="form-check-input checky" value="{{ $subattr->id }}">{{
+                                                    $subattr->attribute_set_name }}
                                                 </label>
                                             </div>
                                         </div>
                                         @endforeach
-                                        
+
                                     </div>
                                 </div>
                                 @endforeach
-                                
+
                             </div>
                         </div>
-                        
+
                     </div>
 
 
@@ -144,25 +152,37 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card card-info">
                         <div class="card-header">
                             <h3 class="card-title">Pricing</h3>
                         </div>
                         <div class="card-body">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" required name="pro_quantity"
+                                    value="{{ old('pro_quantity') ? old('pro_quantity') : 0 }}" class="form-control"
+                                    step="1">
+                            </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label>Buying Price</label>
-                                    <input type="number" required name="pro_buy_price" value="{{ old('pro_buy_price') ? old('pro_buy_price') : 0 }}" class="form-control" step=".50">
+                                    <input type="number" required name="pro_buy_price"
+                                        value="{{ old('pro_buy_price') ? old('pro_buy_price') : 0 }}"
+                                        class="form-control" step=".50">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Selling Price</label>
-                                    <input type="number" required name="pro_sale_price" value="{{ old('pro_sale_price') ? old('pro_sale_price') : 0 }}" class="form-control" step=".50">
+                                    <input type="number" required name="pro_sale_price"
+                                        value="{{ old('pro_sale_price') ? old('pro_sale_price') : 0 }}"
+                                        class="form-control" step=".50">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Discount (amount)</label>
-                                <input type="number" required name="pro_discount" value="{{ old('pro_sale_price') ? old('pro_sale_price') : 0 }}" class="form-control" step=".50">
+                                <input type="number" required name="pro_discount"
+                                    value="{{ old('pro_sale_price') ? old('pro_sale_price') : 0 }}" class="form-control"
+                                    step=".50">
                             </div>
                         </div>
                     </div>
@@ -175,7 +195,8 @@
                             <div class="form-group">
                                 <div class="custom-control custom-switch custom-switch-on-success">
                                     <input type="hidden" name="pro_is_featured" value="0">
-                                    <input type="checkbox" value="1" name="pro_is_featured" class="custom-control-input" id="pro_is_featured">
+                                    <input type="checkbox" value="1" name="pro_is_featured" class="custom-control-input"
+                                        id="pro_is_featured">
                                     <label class="custom-control-label" for="pro_is_featured"></label>
                                 </div>
                             </div>
@@ -199,7 +220,8 @@
 
                             <div class="form-group">
                                 <label for="subcategory_id">Select Sub-Category</label>
-                                <select id="subcategory_id" disabled required name="subcategory_id" class="form-control">
+                                <select id="subcategory_id" disabled required name="subcategory_id"
+                                    class="form-control">
                                     <option value="">Choose sub-category</option>
 
                                 </select>
@@ -232,16 +254,24 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" id="newarrival">
-                                    <label for="newarrival" class="custom-control-label">New Arrival</label>
+                                    <input class="custom-control-input" type="checkbox" id="pro_newarrival"
+                                        name="pro_newarrival" value="1">
+                                    <label for="pro_newarrival" class="custom-control-label">New Arrival</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" id="bestseller">
-                                    <label for="bestseller" class="custom-control-label">Best Seller</label>
+                                    <input class="custom-control-input" type="checkbox" id="pro_newproduct"
+                                        name="pro_newproduct" value="1">
+                                    <label for="pro_newproduct" class="custom-control-label">New Product</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" id="specialoffer">
-                                    <label for="specialoffer" class="custom-control-label">Special Offer</label>
+                                    <input class="custom-control-input" type="checkbox" id="pro_bestseller"
+                                        name="pro_bestseller" value="1">
+                                    <label for="pro_bestseller" class="custom-control-label">Best Seller</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="pro_specialoffer"
+                                        name="pro_specialoffer" value="1">
+                                    <label for="pro_specialoffer" class="custom-control-label">Special Offer</label>
                                 </div>
                             </div>
                         </div>
@@ -401,7 +431,6 @@
     .container {
         padding-top: 50px;
     }
-
 </style>
 @endsection
 

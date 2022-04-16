@@ -80,7 +80,11 @@ class ProductController extends Controller
             'pro_discount'  => 'required|numeric|min:0',
             'pro_is_featured'  => 'required',
             'category_id' => 'required',
-            'subcategory_id' => 'required'
+            'subcategory_id' => 'required',
+            'pro_newarrival'=> 'required',
+            'pro_newproduct'=> 'required',
+            'pro_bestseller'=> 'required',
+            'pro_specialoffer'=> 'required'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -99,7 +103,7 @@ class ProductController extends Controller
         }
         
         $proAllImage = [];
-        $pro_main_image = 'demo.jpg';
+        $pro_main_image = 'storage/demo.jpg';
         if($request->file('pro_images'))
         {
             foreach($_FILES['pro_images']['name'] as $key => $val)
@@ -120,7 +124,7 @@ class ProductController extends Controller
             $pro_img_name = 'product_0_'.time().'.'.pathinfo($static_image, PATHINFO_EXTENSION);
             $proAllImage = Storage::disk('public')->putFileAs('product', $static_image, $pro_img_name);
         }
-
+     //dd($request->input('pro_newarrival'));
         $custom_pro_slug = preg_replace('/\s+/', '-', $request->input('pro_name'));
         Product::create([
             'pro_name' => $request->input('pro_name'),
@@ -131,10 +135,14 @@ class ProductController extends Controller
             'pro_main_image' => $pro_main_image,
             'pro_sku' => 'PR-25',
             'pro_order' => 0,
-            'pro_quantity' => 0,
+            'pro_quantity' => $request->input('pro_quantity'),
             'pro_allow_checkout_when_out_of_stock' => 0,
             'pro_with_storehouse_management' => 0,
             'pro_is_featured' => $request->input('pro_is_featured'),
+            'pro_newarrival'=> $request->input('pro_newarrival'),
+            'pro_newproduct'=> $request->input('pro_newproduct'),
+            'pro_bestseller'=> $request->input('pro_bestseller'),
+            'pro_specialoffer'=>1,// $request->input('pro_specialoffer'),
             'pro_options' => Null,
             'category_id' => $request->input('category_id'),
             'subcategory_id' => $request->input('category_id'),
