@@ -211,7 +211,7 @@
                             <div class="form-group">
                                 <label>Discount (amount)</label>
                                 <input type="number" required name="pro_discount" value="{{ $product->pro_discount }}"
-                                    class="form-control" step=".50">
+                                    class="form-control" step=".50" min="0">
                             </div>
                         </div>
                     </div>

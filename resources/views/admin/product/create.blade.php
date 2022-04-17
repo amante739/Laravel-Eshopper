@@ -182,7 +182,7 @@
                                 <label>Discount (amount)</label>
                                 <input type="number" required name="pro_discount"
                                     value="{{ old('pro_sale_price') ? old('pro_sale_price') : 0 }}" class="form-control"
-                                    step=".50">
+                                    step=".50" min="0">
                             </div>
                         </div>
                     </div>
