@@ -44,7 +44,8 @@
 
         </div>
         @can('product-edit')
-        <form role="form" action="{{ route('product.update', $product->id) }}" method="post" enctype="multipart/form-data">
+        <form role="form" action="{{ route('product.update', $product->id) }}" method="post"
+            enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="row">
@@ -57,12 +58,14 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="pro_name">Product Name</label>
-                                <input type="text"  value="{{ $product->pro_name }}" name="pro_name" required class="form-control" id="pro_name" placeholder="Enter Product Name">
+                                <input type="text" value="{{ $product->pro_name }}" name="pro_name" required
+                                    class="form-control" id="pro_name" placeholder="Enter Product Name">
                             </div>
 
                             <div class="form-group">
                                 <label for="pro_description">Product Description</label>
-                                <textarea class="summernote" name="pro_description">{{ $product->pro_description }}</textarea>
+                                <textarea class="summernote"
+                                    name="pro_description">{{ $product->pro_description }}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -81,8 +84,10 @@
                             <div class="form-group">
                                 <label for="pro_image">Product Image</label>
                                 <div>
-                                    <a class="btn btn-success mb-2" href="javascript:void(0)" onclick="$('#pro_image').click()">Add Multiple Images</a>
-                                    <input type="file" id="pro_image" name="pro_images[]" style="display: none;" class="form-control" multiple>
+                                    <a class="btn btn-success mb-2" href="javascript:void(0)"
+                                        onclick="$('#pro_image').click()">Add Multiple Images</a>
+                                    <input type="file" id="pro_image" name="pro_images[]" style="display: none;"
+                                        class="form-control" multiple>
                                 </div>
                                 <div class="preview-images-zone">
                                     @if ($images)
@@ -91,7 +96,8 @@
                                         <div class="image-cancel" data-no="{{$key}}">x</div>
                                         <div class="image-zone">
                                             <img id="pro-img-{{$key}}" src="{{ asset('storage/app/public/'.$image) }}">
-                                            <input type="fiie" style="display: none;" name="pro_old_images[]" value="{{$image}}">
+                                            <input type="fiie" style="display: none;" name="pro_old_images[]"
+                                                value="{{$image}}">
                                         </div>
                                     </div>
                                     @endforeach
@@ -114,29 +120,34 @@
                                 <div class="col-md-12 mb-4">
                                     @php $count = 0 @endphp
                                     @foreach ($product_variations as $var_key => $var)
-                                        @if($var['key'] == $attribute->id)
-                                            @php $count = 1 @endphp
-                                        @endif
+                                    @if($var['key'] == $attribute->id)
+                                    @php $count = 1 @endphp
+                                    @endif
                                     @endforeach
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" @if($count == 1) checked @endif value="{{ $attribute->id }}" name="attribute{{ $key }}" type="checkbox" id="attr{{ $key }}">
-                                        <label for="attr{{$key}}" class="custom-control-label">{{ $attribute->attribute_name }}</label>
+                                        <input class="custom-control-input" @if($count==1) checked @endif
+                                            value="{{ $attribute->id }}" name="attribute{{ $key }}" type="checkbox"
+                                            id="attr{{ $key }}">
+                                        <label for="attr{{$key}}" class="custom-control-label">{{
+                                            $attribute->attribute_name }}</label>
                                     </div>
-                                    
+
                                     <div class="row mt-2">
                                         @foreach($attribute->attributesets as $newkey => $subattr)
-                                        
+
                                         @php $data = 0 @endphp
                                         @foreach ($product_variations as $var_key => $var)
-                                            @if($var['key'] == $attribute->id && in_array($subattr->id, $var['value']))
-                                                @php $data = 1 @endphp
-                                            @endif
+                                        @if($var['key'] == $attribute->id && in_array($subattr->id, $var['value']))
+                                        @php $data = 1 @endphp
+                                        @endif
                                         @endforeach
 
                                         <div class="col-md-3 mb-2">
                                             <div class="form-check-inline">
                                                 <label class="form-check-label">
-                                                    <input type="checkbox" name="subattribute{{ $key }}[]" class="form-check-input checky" value="{{ $subattr->id }}" @if($data == 1) checked @endif>{{ $subattr->attribute_set_name }}
+                                                    <input type="checkbox" name="subattribute{{ $key }}[]"
+                                                        class="form-check-input checky" value="{{ $subattr->id }}"
+                                                        @if($data==1) checked @endif>{{ $subattr->attribute_set_name }}
                                                 </label>
                                             </div>
                                         </div>
@@ -145,10 +156,10 @@
 
                                 </div>
                                 @endforeach
-                                
+
                             </div>
                         </div>
-                        
+
                     </div>
 
 
@@ -164,32 +175,43 @@
                             <div class="form-group">
                                 <label>Select</label>
                                 <select class="form-control" required name="pro_status">
-                                    <option value="published" @if ($product->pro_status == 'published') selected @endif>Published</option>
-                                    <option value="draft" @if ($product->pro_status == 'draft') selected @endif>Draft</option>
-                                    <option value="pending" @if ($product->pro_status == 'pending') selected @endif>Pending</option>
+                                    <option value="published" @if ($product->pro_status == 'published') selected
+                                        @endif>Published</option>
+                                    <option value="draft" @if ($product->pro_status == 'draft') selected @endif>Draft
+                                    </option>
+                                    <option value="pending" @if ($product->pro_status == 'pending') selected
+                                        @endif>Pending</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card card-info">
                         <div class="card-header">
                             <h3 class="card-title">Pricing</h3>
                         </div>
                         <div class="card-body">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" required name="pro_quantity" value="{{ $product->pro_quantity }}"
+                                    class="form-control" step="1">
+                            </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label>Buying Price</label>
-                                    <input type="number" required name="pro_buy_price" value="{{ $product->pro_buy_price }}" class="form-control" step=".50">
+                                    <input type="number" required name="pro_buy_price"
+                                        value="{{ $product->pro_buy_price }}" class="form-control" step=".50">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Selling Price</label>
-                                    <input type="number" required name="pro_sale_price" value="{{ $product->pro_sale_price }}" class="form-control" step=".50">
+                                    <input type="number" required name="pro_sale_price"
+                                        value="{{ $product->pro_sale_price }}" class="form-control" step=".50">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Discount (amount)</label>
-                                <input type="number" required name="pro_discount" value="{{ $product->pro_discount }}" class="form-control" step=".50">
+                                <input type="number" required name="pro_discount" value="{{ $product->pro_discount }}"
+                                    class="form-control" step=".50">
                             </div>
                         </div>
                     </div>
@@ -202,7 +224,8 @@
                             <div class="form-group">
                                 <div class="custom-control custom-switch custom-switch-on-success">
                                     <input type="hidden" name="pro_is_featured" value="0">
-                                    <input type="checkbox" value="1" @if ($product->pro_is_featured == 1) checked @endif name="pro_is_featured" class="custom-control-input" id="pro_is_featured">
+                                    <input type="checkbox" value="1" @if ($product->pro_is_featured == 1) checked @endif
+                                    name="pro_is_featured" class="custom-control-input" id="pro_is_featured">
                                     <label class="custom-control-label" for="pro_is_featured"></label>
                                 </div>
                             </div>
@@ -219,7 +242,8 @@
                                 <select class="form-control" required id="category_id" required name="category_id">
                                     <option value="">Choose Category</option>
                                     @foreach ($all_category as $category)
-                                    <option value="{{ $category->id }}" @if ($category->id == $product->category_id) selected @endif>{{ $category->cat_name }}</option>
+                                    <option value="{{ $category->id }}" @if ($category->id == $product->category_id)
+                                        selected @endif>{{ $category->cat_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -228,7 +252,9 @@
                                 <label for="subcategory_id">Select Sub-Category</label>
                                 <select id="subcategory_id" required name="subcategory_id" class="form-control">
                                     @foreach ($all_subcategory as $subcategory)
-                                    <option value="{{ $subcategory->id }}" @if ($subcategory->id == $product->subcategory_id) selected @endif>{{ $subcategory->subcat_name }}</option>
+                                    <option value="{{ $subcategory->id }}" @if ($subcategory->id ==
+                                        $product->subcategory_id) selected @endif>{{ $subcategory->subcat_name }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -246,7 +272,8 @@
                                 <label>Select Brand</label>
                                 <select class="form-control" name="brand_id">
                                     @foreach ($all_brand as $brand)
-                                    <option value="{{ $brand->id }}" @if ($brand->id == $product->brand_id) selected @endif>{{ $brand->brand_name }}</option>
+                                    <option value="{{ $brand->id }}" @if ($brand->id == $product->brand_id) selected
+                                        @endif>{{ $brand->brand_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -258,7 +285,7 @@
                             <h3 class="card-title">Product Collections</h3>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="newarrival">
                                     <label for="newarrival" class="custom-control-label">New Arrival</label>
@@ -270,6 +297,32 @@
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="specialoffer">
                                     <label for="specialoffer" class="custom-control-label">Special Offer</label>
+                                </div>
+                            </div>-->
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="pro_newarrival"
+                                        name="pro_newarrival" value="1" @if ($product->pro_newarrival == 1) checked
+                                    @endif>
+                                    <label for="pro_newarrival" class="custom-control-label">New Arrival</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="pro_newproduct"
+                                        name="pro_newproduct" value="1" @if ($product->pro_newproduct == 1) checked
+                                    @endif>
+                                    <label for="pro_newproduct" class="custom-control-label">New Product</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="pro_bestseller"
+                                        name="pro_bestseller" value="1" @if ($product->pro_bestseller == 1) checked
+                                    @endif>
+                                    <label for="pro_bestseller" class="custom-control-label">Best Seller</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="pro_specialoffer"
+                                        name="pro_specialoffer" value="1" @if ($product->pro_specialoffer == 1) checked
+                                    @endif>
+                                    <label for="pro_specialoffer" class="custom-control-label">Special Offer</label>
                                 </div>
                             </div>
                         </div>
@@ -429,7 +482,6 @@
     .container {
         padding-top: 50px;
     }
-
 </style>
 @endsection
 

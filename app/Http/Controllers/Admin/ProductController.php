@@ -69,6 +69,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validator = Validator::make(request()->all(), [
             'pro_name' => 'required|unique:products,pro_name',
             'pro_description' => 'nullable',
@@ -124,6 +125,7 @@ class ProductController extends Controller
         //dd(($request->has('pro_newarrival')) ? true : false);
 
         $custom_pro_slug = preg_replace('/\s+/', '-', $request->input('pro_name'));
+        $Sku= (int)Product::max('id') + 1;
         Product::create([
             'pro_name' => $request->input('pro_name'),
             'pro_slug' => strtolower($custom_pro_slug),
@@ -131,7 +133,7 @@ class ProductController extends Controller
             'pro_content' => $request->input('pro_content'),
             'pro_images' => json_encode($proAllImage),
             'pro_main_image' => $pro_main_image,
-            'pro_sku' => 'PR-25',
+            'pro_sku' => 'PR-00'. $Sku,
             'pro_order' => 0,
             'pro_quantity' => $request->input('pro_quantity'),
             'pro_allow_checkout_when_out_of_stock' => 0,
@@ -305,6 +307,11 @@ class ProductController extends Controller
             'pro_allow_checkout_when_out_of_stock' => 0,
             'pro_with_storehouse_management' => 0,
             'pro_is_featured' => $request->input('pro_is_featured'),
+            'pro_newarrival' => ($request->has('pro_newarrival')) ? 1 : 0,
+            //$request->input('pro_newarrival'),
+            'pro_newproduct' => ($request->has('pro_newproduct')) ? 1 : 0,
+            'pro_bestseller' => ($request->has('pro_bestseller')) ? 1 : 0,
+            'pro_specialoffer' => ($request->has('pro_specialoffer')) ? 1 : 0,
             'pro_options' => Null,
             'category_id' => $request->input('category_id'),
             'subcategory_id' => $request->input('subcategory_id'),
