@@ -312,6 +312,7 @@ class ProductController extends Controller
             'pro_allow_checkout_when_out_of_stock' => 0,
             'pro_with_storehouse_management' => 0,
             'pro_is_featured' => $request->input('pro_is_featured'),
+            'pro_tag_list' => implode(',', $request->input('pro_tag_list')),
             'pro_newarrival' => ($request->has('pro_newarrival')) ? 1 : 0,
             //$request->input('pro_newarrival'),
             'pro_newproduct' => ($request->has('pro_newproduct')) ? 1 : 0,
