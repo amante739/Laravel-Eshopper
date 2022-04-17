@@ -194,18 +194,18 @@
                             <div class="form-group">
                                 <label>Quantity</label>
                                 <input type="number" required name="pro_quantity" value="{{ $product->pro_quantity }}"
-                                    class="form-control" step="1">
+                                    class="form-control" step="1" min="0">
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label>Buying Price</label>
                                     <input type="number" required name="pro_buy_price"
-                                        value="{{ $product->pro_buy_price }}" class="form-control" step=".50">
+                                        value="{{ $product->pro_buy_price }}" class="form-control" step=".50" min="0">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Selling Price</label>
                                     <input type="number" required name="pro_sale_price"
-                                        value="{{ $product->pro_sale_price }}" class="form-control" step=".50">
+                                        value="{{ $product->pro_sale_price }}" class="form-control" step=".50" min="0">
                                 </div>
                             </div>
                             <div class="form-group">
