@@ -15,10 +15,12 @@ class AddProductCollectionsToProducts extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             //
-             $table->tinyInteger('pro_newarrival')->unsigned()->default(0);
-             $table->tinyInteger('pro_newproduct')->unsigned()->default(0);
-             $table->tinyInteger('pro_bestseller')->unsigned()->default(0);
-             $table->tinyInteger('pro_specialoffer')->unsigned()->default(0);
+             
+            $table->boolean('pro_newarrival')->default(0);
+            $table->boolean('pro_newproduct')->default(0);
+            $table->boolean('pro_bestseller')->default(0);
+            $table->boolean('pro_specialoffer')->default(0);
+            
         });
     }
 

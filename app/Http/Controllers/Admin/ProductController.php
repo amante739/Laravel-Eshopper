@@ -80,11 +80,11 @@ class ProductController extends Controller
             'pro_discount'  => 'required|numeric|min:0',
             'pro_is_featured'  => 'required',
             'category_id' => 'required',
-            'subcategory_id' => 'required',
-            'pro_newarrival'=> 'required',
+            'subcategory_id' => 'required' //,
+            /*'pro_newarrival'=> 'required',
             'pro_newproduct'=> 'required',
             'pro_bestseller'=> 'required',
-            'pro_specialoffer'=> 'required'
+            'pro_specialoffer'=> 'required'*/
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -92,39 +92,37 @@ class ProductController extends Controller
 
         $attr_count = Attribute::count();
         $attrlist = [];
-        for($i=0;$i<=$attr_count; $i++)
-        {
-            if($request->input('attribute'.$i)){
+        for ($i = 0; $i <= $attr_count; $i++) {
+            if ($request->input('attribute' . $i)) {
                 $attrlist[] = array(
-                    'key' => $request->input('attribute'.$i),
-                    'value' => $request->input('subattribute'.$i)
+                    'key' => $request->input('attribute' . $i),
+                    'value' => $request->input('subattribute' . $i)
                 );
             }
         }
-        
+
         $proAllImage = [];
         $pro_main_image = 'storage/demo.jpg';
-        if($request->file('pro_images'))
-        {
-            foreach($_FILES['pro_images']['name'] as $key => $val)
-            {
-                $pro_img_name = 'product_'.$key.'_'.time().'.'.pathinfo($val, PATHINFO_EXTENSION);
-                $file = Image::make($request->file('pro_images')[$key])->resize(null, 300, function($constraint) {
+        if ($request->file('pro_images')) {
+            foreach ($_FILES['pro_images']['name'] as $key => $val) {
+                $pro_img_name = 'product_' . $key . '_' . time() . '.' . pathinfo($val, PATHINFO_EXTENSION);
+                $file = Image::make($request->file('pro_images')[$key])->resize(null, 300, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-                Storage::disk('public')->put('product/'.$pro_img_name, $file->stream());
-                if($key == 0)
-                {
-                    $pro_main_image = 'product/'.$pro_img_name;
+                Storage::disk('public')->put('product/' . $pro_img_name, $file->stream());
+                if ($key == 0) {
+                    $pro_main_image = 'product/' . $pro_img_name;
                 }
-                array_push($proAllImage, 'product/'.$pro_img_name);
+                array_push($proAllImage, 'product/' . $pro_img_name);
             }
-        }else{
+        } else {
             $static_image = Storage::disk('public')->path('demo.jpg');
-            $pro_img_name = 'product_0_'.time().'.'.pathinfo($static_image, PATHINFO_EXTENSION);
+            $pro_img_name = 'product_0_' . time() . '.' . pathinfo($static_image, PATHINFO_EXTENSION);
             $proAllImage = Storage::disk('public')->putFileAs('product', $static_image, $pro_img_name);
         }
-     //dd($request->input('pro_newarrival'));
+        // dd($request->input('pro_newarrival'). $request->input('pro_newproduct'));
+        //dd(($request->has('pro_newarrival')) ? true : false);
+
         $custom_pro_slug = preg_replace('/\s+/', '-', $request->input('pro_name'));
         Product::create([
             'pro_name' => $request->input('pro_name'),
@@ -139,10 +137,11 @@ class ProductController extends Controller
             'pro_allow_checkout_when_out_of_stock' => 0,
             'pro_with_storehouse_management' => 0,
             'pro_is_featured' => $request->input('pro_is_featured'),
-            'pro_newarrival'=> $request->input('pro_newarrival'),
-            'pro_newproduct'=> $request->input('pro_newproduct'),
-            'pro_bestseller'=> $request->input('pro_bestseller'),
-            'pro_specialoffer'=>1,// $request->input('pro_specialoffer'),
+            'pro_newarrival' => ($request->has('pro_newarrival')) ? 1 : 0,
+            //$request->input('pro_newarrival'),
+            'pro_newproduct' => ($request->has('pro_newproduct')) ? 1 : 0,
+            'pro_bestseller' => ($request->has('pro_bestseller')) ? 1 : 0,
+            'pro_specialoffer' => ($request->has('pro_specialoffer')) ? 1 : 0, // $request->input('pro_specialoffer'),
             'pro_options' => Null,
             'category_id' => $request->input('category_id'),
             'subcategory_id' => $request->input('category_id'),
@@ -197,12 +196,9 @@ class ProductController extends Controller
         $product = Product::where('id', $id)->first();
 
         $product->pro_images = json_decode($product->pro_images);
-        if(is_array($product->pro_images))
-        {
+        if (is_array($product->pro_images)) {
             $images = $product->pro_images;
-        }
-        else
-        {
+        } else {
             $images[] = $product->pro_images;
         }
         $product_variations = json_decode($product->pro_variations, true);
@@ -211,7 +207,7 @@ class ProductController extends Controller
         $all_category = Category::all();
         $all_subcategory = SubCategory::where('cat_id', $product->category_id)->get();
         $all_attribute = Attribute::with('attributesets')->get();
-        
+
         return view('admin.product.edit', compact(['product', 'all_category', 'all_subcategory', 'all_brand', 'all_attribute', 'images', 'product_variations']));
     }
 
@@ -243,12 +239,11 @@ class ProductController extends Controller
 
         $attr_count = Attribute::count();
         $attrlist = [];
-        for($i=0;$i<=$attr_count; $i++)
-        {
-            if($request->input('attribute'.$i)){
+        for ($i = 0; $i <= $attr_count; $i++) {
+            if ($request->input('attribute' . $i)) {
                 $attrlist[] = array(
-                    'key' => $request->input('attribute'.$i),
-                    'value' => $request->input('subattribute'.$i)
+                    'key' => $request->input('attribute' . $i),
+                    'value' => $request->input('subattribute' . $i)
                 );
             }
         }
@@ -256,48 +251,43 @@ class ProductController extends Controller
         $proAllImage = [];
         $pro_main_image = '';
         $count = 0;
-        if($request->input('pro_old_images')){
-            foreach($request->input('pro_old_images') as $key_old => $val){
+        if ($request->input('pro_old_images')) {
+            foreach ($request->input('pro_old_images') as $key_old => $val) {
                 $img_name = str_replace("product/", "", $val);
-                $img_new_name = 'product_'.$key_old.'_'.time().'.'.pathinfo($img_name, PATHINFO_EXTENSION);
+                $img_new_name = 'product_' . $key_old . '_' . time() . '.' . pathinfo($img_name, PATHINFO_EXTENSION);
 
-                if(($key_old) == 0)
-                {
-                    $pro_main_image = 'product/'.$img_new_name;
+                if (($key_old) == 0) {
+                    $pro_main_image = 'product/' . $img_new_name;
                 }
 
-                array_push($proAllImage, 'product/'.$img_new_name);
-                Storage::disk('public')->copy($val, 'product/'.$img_new_name);
+                array_push($proAllImage, 'product/' . $img_new_name);
+                Storage::disk('public')->copy($val, 'product/' . $img_new_name);
             }
-            $count = $key_old+1;
+            $count = $key_old + 1;
         }
 
         $productInfo = Product::find($id);
 
         $old_images = json_decode($productInfo->pro_images);
-        if(($old_images))
-        {
-            foreach($old_images as $val){
+        if (($old_images)) {
+            foreach ($old_images as $val) {
                 Storage::disk('public')->delete($val);
             }
         }
 
         $productInfo->pro_images = json_decode($productInfo->pro_images);
-        
-        if($request->file('pro_images'))
-        {
-            foreach($_FILES['pro_images']['name'] as $key => $val)
-            {
-                $pro_img_name = 'product_'.($key+$count).'_'.time().'.'.pathinfo($val, PATHINFO_EXTENSION);
-                $file = Image::make($request->file('pro_images')[$key])->resize(null, 300, function($constraint) {
+
+        if ($request->file('pro_images')) {
+            foreach ($_FILES['pro_images']['name'] as $key => $val) {
+                $pro_img_name = 'product_' . ($key + $count) . '_' . time() . '.' . pathinfo($val, PATHINFO_EXTENSION);
+                $file = Image::make($request->file('pro_images')[$key])->resize(null, 300, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-                Storage::disk('public')->put('product/'.$pro_img_name, $file->stream());
-                if(($key+$count) == 0)
-                {
-                    $pro_main_image = 'product/'.$pro_img_name;
+                Storage::disk('public')->put('product/' . $pro_img_name, $file->stream());
+                if (($key + $count) == 0) {
+                    $pro_main_image = 'product/' . $pro_img_name;
                 }
-                array_push($proAllImage, 'product/'.$pro_img_name);
+                array_push($proAllImage, 'product/' . $pro_img_name);
             }
         }
 
