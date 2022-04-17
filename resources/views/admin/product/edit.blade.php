@@ -373,16 +373,20 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Tags</label>
+
+
                                 <div class="select2-purple">
-                                    <select class="select2" multiple="multiple" data-dropdown-css-class="select2-purple"
-                                        style="width: 100%;">
-                                        <option>IT</option>
-                                        <option>Electronics</option>
-                                        <option>Mobile</option>
-                                        <option>Dress</option>
-                                        <option>Grocerry</option>
-                                        <option>Clothes</option>
-                                        <option>Fresh</option>
+                                    <select class="select2" name="pro_tag_list[]" multiple="multiple"
+                                        data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                        @php
+                                        $values = (explode(",",$product->pro_tag_list));
+                                        @endphp
+                                        @foreach($all_tag as $tag)
+                                        <option {{ (in_array($tag->tag_title,$values)) ? 'selected' : '' }}>{{ $tag->tag_title}}
+                                        </option>
+                                        @endforeach
+
+
                                     </select>
                                 </div>
                             </div>

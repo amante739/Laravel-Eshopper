@@ -8,6 +8,7 @@ use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,8 +44,9 @@ class ProductController extends Controller
     {
         $all_brand = Brand::all();
         $all_category = Category::all();
+        $all_tag = Tag::all();
         $all_attribute = Attribute::with('attributesets')->get();
-        return view('admin.product.create', compact(['all_category', 'all_attribute', 'all_brand']));
+        return view('admin.product.create', compact(['all_category', 'all_attribute', 'all_brand','all_tag']));
     }
 
     /**
@@ -69,7 +71,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validator = Validator::make(request()->all(), [
             'pro_name' => 'required|unique:products,pro_name',
             'pro_description' => 'nullable',
@@ -122,10 +124,11 @@ class ProductController extends Controller
             $proAllImage = Storage::disk('public')->putFileAs('product', $static_image, $pro_img_name);
         }
         // dd($request->input('pro_newarrival'). $request->input('pro_newproduct'));
-        //dd(($request->has('pro_newarrival')) ? true : false);
+        //dd($request->input('pro_tag_list'));
+        //dd(implode(',', $request->input('pro_tag_list')));
 
         $custom_pro_slug = preg_replace('/\s+/', '-', $request->input('pro_name'));
-        $Sku= (int)Product::max('id') + 1;
+        $Sku = (int)Product::max('id') + 1;
         Product::create([
             'pro_name' => $request->input('pro_name'),
             'pro_slug' => strtolower($custom_pro_slug),
@@ -133,12 +136,13 @@ class ProductController extends Controller
             'pro_content' => $request->input('pro_content'),
             'pro_images' => json_encode($proAllImage),
             'pro_main_image' => $pro_main_image,
-            'pro_sku' => 'PR-00'. $Sku,
+            'pro_sku' => 'PR-00' . $Sku,
             'pro_order' => 0,
             'pro_quantity' => $request->input('pro_quantity'),
             'pro_allow_checkout_when_out_of_stock' => 0,
             'pro_with_storehouse_management' => 0,
             'pro_is_featured' => $request->input('pro_is_featured'),
+            'pro_tag_list'=> implode(',', $request->input('pro_tag_list')),
             'pro_newarrival' => ($request->has('pro_newarrival')) ? 1 : 0,
             //$request->input('pro_newarrival'),
             'pro_newproduct' => ($request->has('pro_newproduct')) ? 1 : 0,
@@ -206,11 +210,12 @@ class ProductController extends Controller
         $product_variations = json_decode($product->pro_variations, true);
         // dd($product_variations);
         $all_brand = Brand::all();
+        $all_tag=Tag::all();
         $all_category = Category::all();
         $all_subcategory = SubCategory::where('cat_id', $product->category_id)->get();
         $all_attribute = Attribute::with('attributesets')->get();
 
-        return view('admin.product.edit', compact(['product', 'all_category', 'all_subcategory', 'all_brand', 'all_attribute', 'images', 'product_variations']));
+        return view('admin.product.edit', compact(['product', 'all_category', 'all_subcategory', 'all_brand', 'all_attribute', 'images', 'product_variations','all_tag']));
     }
 
     /**
@@ -301,9 +306,9 @@ class ProductController extends Controller
             'pro_content' => $request->input('pro_content'),
             'pro_images' => json_encode($proAllImage),
             'pro_main_image' => $pro_main_image,
-            'pro_sku' => 'PR-25',
+            //'pro_sku' => 'PR-25',
             'pro_order' => 0,
-            'pro_quantity' => 0,
+            'pro_quantity' => $request->input('pro_quantity'),
             'pro_allow_checkout_when_out_of_stock' => 0,
             'pro_with_storehouse_management' => 0,
             'pro_is_featured' => $request->input('pro_is_featured'),

@@ -323,15 +323,11 @@
                             <div class="form-group">
                                 <label>Tags</label>
                                 <div class="select2-purple">
-                                    <select class="select2" multiple="multiple" data-dropdown-css-class="select2-purple"
-                                        style="width: 100%;">
-                                        <option>IT</option>
-                                        <option>Electronics</option>
-                                        <option>Mobile</option>
-                                        <option>Dress</option>
-                                        <option>Grocerry</option>
-                                        <option>Clothes</option>
-                                        <option>Fresh</option>
+                                    <select name="pro_tag_list[]" class="select2" multiple="multiple"
+                                        data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                        @foreach ($all_tag as $tag)
+                                        <option value="{{ $tag->id }}">{{ $tag->tag_title}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
